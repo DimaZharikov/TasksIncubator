@@ -1,23 +1,54 @@
-import { StateType } from './../HW8';
-
-export type ActionType = {
-    type: 'sort' |'check'
-    payload: string | number
+type StateType = {
+    _id: number
+    name: string
+    age: number
 }
 
+type SortNameUpType = {
+    type: "sort"
+    payload: "up"
+}
 
-export const homeWorkReducer = (state: StateType, action: ActionType): StateType => {
+type SortNameDownType = {
+    type: "sort"
+    payload: "down"
+}
+
+type CheckAgeType = {
+    type: 'check'
+}
+
+type ActionType = SortNameUpType | SortNameDownType | CheckAgeType
+
+export const homeWorkReducer = (state: Array<StateType>, action: ActionType): Array<StateType> => {
     switch (action.type) {
         case "sort": {
-            let stateCopy = [...state]
-            action.payload === 'up' && stateCopy.sort((a, b) => a.name !== b.name ? a.name < b.name ? -1 : 1 : 0)
-            action.payload === 'down' && stateCopy.sort((a, b) => a.name !== b.name ? a.name > b.name ? -1 : 1 : 0)
-            return stateCopy
+            if (action.payload === 'up') {
+                return [...state.sort(function (a, b) {
+                    if (a.name > b.name) {
+                        return 1
+                    }
+                    if (a.name < b.name) {
+                        return -1
+                    }
+                    return 0
+                })]
+            } else if (action.payload === 'down') {
+                return [...state.sort(function (a, b) {
+                    if (a.name > b.name) {
+                        return -1
+                    }
+                    if (a.name < b.name) {
+                        return 1
+                    }
+                    return 0
+                })]
+            }
         }
         case "check": {
-            return state.filter((el: { age: number; })=> el.age > action.payload)
-            
+            return [...state.filter(el => el.age > 18)]
         }
-        default: return state
+        default:
+            return state
     }
 };

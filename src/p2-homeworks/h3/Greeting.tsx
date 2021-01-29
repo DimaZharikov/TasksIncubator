@@ -1,33 +1,30 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from "./Greeting.module.css";
 
 type GreetingPropsType = {
-    name: string // need to fix any
-    setNameCallback: (e: string)=> void// need to fix any
-    addUser: ()=>void // need to fix any
-    error: string // need to fix any
-    totalUsers: number // need to fix any
+    name: string
+    setNameCallback: (e: ChangeEvent<HTMLInputElement>) => void
+    addUser: () => void
+    error: boolean
+    totalUsers: number
 }
 
 // презентационная компонента (для верстальщика)
 const Greeting: React.FC<GreetingPropsType> = (
     {name, setNameCallback, addUser, error, totalUsers} // деструктуризация пропсов
 ) => {
-    const inputClass = error ? s.error : ''; // need to fix with (?:)
-    const isError = error ? s.errorBox : ''
+    const inputClassTrue = s.errorFalse;
+    const displayNone = s.displayNone;
+
+
     return (
-      <div>
-        <div className={s.wrapper}>
-          <input
-            value={name}
-            onChange={(e) => setNameCallback(e.target.value)}
-            className={inputClass}
-          />
-          <button onClick={addUser}>add</button>
-          <span>{totalUsers} Users Added</span>
+        <div className={s.content}>
+            <input value={name} onChange={setNameCallback} className={error ? inputClassTrue : ""}/>
+            <span className={error ? s.errorText : displayNone}>{error ? 'Введите имя' : ''}</span>
+            <button onClick={addUser} className={s.button}>add</button>
+            <br/>
+            <span className={s.totalUsers}>Добавлено пользователей: {totalUsers}</span>
         </div>
-            <span className={isError}>{error}</span>
-      </div>
     );
 }
 

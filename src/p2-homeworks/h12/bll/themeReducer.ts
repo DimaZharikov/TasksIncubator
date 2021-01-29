@@ -1,54 +1,33 @@
-;
-const CHANGE_THEME = 'CHANGE_THEME'
-const TOGGLE_THEME = 'TOGGLE_THEME'
-export type ThemeStateType = typeof initState
+export type ThemeInitState = {
+    themes: string
+}
+
+export type ThemeActionTotalType = SetDarkThemeActionType | SetRedThemeActionType | SetSomeThemeActionType
+
+type SetDarkThemeActionType = {
+    type:'SET-DARK-THEME'
+}
+
+type SetRedThemeActionType = {
+    type:'SET-RED-THEME'
+}
+
+type SetSomeThemeActionType = {
+    type:'SET-SOME-THEME'
+}
+
 const initState = {
-    clr: 'dark',
-    themes: ['dark', 'red', 'some'],
-    btns: [
-        { name: 'green', state: true },
-        {name: 'orange', state: true },
-        {name: 'navy', state: true},
-    ]
+    themes: 'some'
 };
 
-export type ChangeThemeActionType = ReturnType<typeof changeThemeC> | ReturnType<typeof toggleAdditionalThemes>
-export const themeReducer = (state = initState, action: ChangeThemeActionType): ThemeStateType => { // fix any
+export const themeReducer = (state:ThemeInitState = initState, action: ThemeActionTotalType): ThemeInitState => { // fix any
     switch (action.type) {
-        case CHANGE_THEME: {
-            return {...state, clr:action.clr};
-        }
-        case TOGGLE_THEME:
-            if (action.state) {
-                return {
-                    ...state, themes: [...state.themes, action.name], btns: state.btns.map((el) => {
-                        if (el.name === action.name) {
-                            return{...el, state:false}
-                        }
-                    else return{...el}
-                })}
-            }
-            else {
-                return {
-                    ...state,
-                    clr: 'dark',
-                    themes: state.themes.filter((el) => el !== action.name),
-                    btns: state.btns.map((el) => {
-                        if (el.name === action.name) {
-                            return{...el, state:true}
-                        }
-                        return{...el}
-                    })
-                }
-            }
+        case "SET-DARK-THEME":
+            return {themes: 'dark'}
+        case "SET-RED-THEME":
+            return {themes: 'red'}
+        case "SET-SOME-THEME":
+            return {themes: 'some'}
         default: return state;
     }
 };
-
-export const changeThemeC = (clr: string) => {
-    return{type: CHANGE_THEME, clr} as const
-}; // fix any
-
-export const toggleAdditionalThemes = (name:string, state:boolean) => {
-    return{ type: TOGGLE_THEME, name, state}as const
-}

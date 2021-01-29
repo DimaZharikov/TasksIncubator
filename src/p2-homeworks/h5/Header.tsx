@@ -1,47 +1,26 @@
-import classes from "./Header.module.css";
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import React, {useState} from "react";
+import s from './hw5.module.css'
+import {NavLink} from "react-router-dom";
+import {PATH} from './Routes'
 
 function Header() {
-const[nav, setNav]=useState<boolean>(false)
-    const navigation = [
-      { to: "/pre-junior", name: "PreJunior"},
-      { to: "/junior", name: "Junior"},
-      { to: "/junior-plus", name: "Junior Plus"},
-    ];
-  
-    const renderNavLinks = navigation.map((link, i) => {
-      return (
-        <li className={classes.NavItem} key={i + link.to}>
-          <NavLink
-            to={link.to}
-           
-            activeClassName={classes.active}
-          >
-            {link.name}
-          </NavLink>
-        </li>
-      );
-    });
-  
-  let cls = `${classes.Navigation} animate__animated  animate__slideInRight`;
-  useEffect(() => {
-    let timeout = setTimeout(() => {
-      setNav(true)
-    }, 700)
-    return ()=> clearTimeout(timeout)
-  }, [])
-  
+
+    const [activeMenu, setActiveMenu] = useState<boolean>(false);
+    const toggle = () => {
+        setActiveMenu(!activeMenu)
+    }
 
     return (
-      <div className={classes.Header}>
-        {nav && (
-          <nav className={cls}>
-            <ul className={classes.NavLinks}>{renderNavLinks}</ul>
-          </nav>
-        )}
-      </div>
+        <div className={s.menuWrapper}>
+            <div className={s.burgerMenu} onClick={toggle}>&#9776;</div>
+            <div className={`${s.containerMenuLinks} ${activeMenu && s.activeMenu}`}>
+                <NavLink to={PATH.PRE_JUNIOR} activeClassName={s.active} className={s.menuLinks}> PreJunior</NavLink>
+                <NavLink to={PATH.JUNIOR_PLUS} activeClassName={s.active} className={s.menuLinks}> Junior + </NavLink>
+                <NavLink to={"/todo"} activeClassName={s.active} className={s.menuLinks}> ToDo list </NavLink>
+                <NavLink to={"/checkbox"} activeClassName={s.active} className={s.menuLinks}> My check box </NavLink>
+                <NavLink to={"/button"} activeClassName={s.active} className={s.menuLinks}> My button </NavLink>
+            </div>
+        </div>
     );
 }
 

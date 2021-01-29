@@ -1,18 +1,13 @@
-import { themeReducer } from './../../h12/bll/themeReducer';
-import { applyMiddleware, combineReducers, createStore } from "redux";
-import { loadingReducer } from "./loadingReducer";
-import{ reducer as formReducer} from 'redux-form'
-import thunk from 'redux-thunk';
-import { requestReducer } from '../../h13/requestReducer';
+import {loadingReducer} from "./loadingReducer";
+import {combineReducers, createStore} from "redux";
+import {themeReducer} from "../../h12/bll/themeReducer";
 
 const reducers = combineReducers({
     loading: loadingReducer,
-    theme: themeReducer,
-    request: requestReducer,
-    form: formReducer
+    theme: themeReducer
 });
 
-const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(reducers);
 
 export default store
 

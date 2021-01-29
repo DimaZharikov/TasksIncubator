@@ -1,12 +1,10 @@
-import classes from "./radio.module.css";
 import React, {ChangeEvent, InputHTMLAttributes, DetailedHTMLProps} from "react";
-import { IRadio } from "../../HW7";
 
 type DefaultRadioPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 type SuperRadioPropsType = DefaultRadioPropsType & {
-    options?: Array<IRadio>
-    onChangeOption?: (option: string) => void
+    options?: Array<string>
+    onChangeOption?: (option: string ) => void
 }
 
 const SuperRadio: React.FC<SuperRadioPropsType> = (
@@ -18,28 +16,22 @@ const SuperRadio: React.FC<SuperRadioPropsType> = (
     }
 ) => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
-       onChangeOption && onChangeOption(e.currentTarget.value)
+        onChangeOption && onChangeOption(e.currentTarget.value)
     }
 
 
-    const mappedOptions: any[] = options
-      ? options.map((
-          o,
-          i // map options with key
-        ) => (
-          <label key={name + "-" + i} className={classes.RadioLabel}>
+    const mappedOptions: any[] = options ? options.map((o, i) => (
+        <label key={name + "-" + i}>
             <input
-              type={"radio"}
-              checked={o.checked}
-              name={o.name}
-              value={o.name}
-              onChange={onChangeCallback}
-              // name, checked, value, onChange
+                type={"radio"}
+                name={name}
+                checked = {value === o}
+                value={o}
+                onChange={onChangeCallback}
             />
-            <span>{o.name}</span>
-          </label>
-        ))
-      : [];
+            {o}
+        </label>
+    )) : [];
 
     return (
         <>

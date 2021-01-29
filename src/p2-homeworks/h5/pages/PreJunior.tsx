@@ -1,12 +1,14 @@
-// import classes from "./Pages.module.css";
 import React from "react";
+import HW4 from "../../h4/HW4";
+import './../style.css'
 
 
-function PreJunior(props:any) {
+function PreJunior() {
     return (
-     <>
-        {props.children}
-    </>
+        <div className='size'>
+            <div className='title'>Наполнение для PreJunior</div>
+            <HW4/>
+        </div>
     );
 }
 

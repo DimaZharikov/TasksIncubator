@@ -1,23 +1,28 @@
+type loadingACType = {
+    type: 'LOADING-CHANGE'
+    payload: {loading:boolean}
+}
+export type HW10State = {
+    loading: boolean
+}
 
-const TOGGLE_LOADING = 'TOGGLE_LOADING'
-
-export type LoadType = typeof initState
-const initState = {
+const initState: HW10State = {
     loading: false
 };
-export type LoadACType = ReturnType<typeof loadingAC>
-export const loadingReducer = (state = initState, action: LoadACType): LoadType => { // fix any
+
+export const loadingReducer = (state = initState, action: loadingACType): HW10State => { // fix any
     switch (action.type) {
-        case TOGGLE_LOADING: {
-            return {...state, loading:action.loading}
+        case "LOADING-CHANGE": {
+            return {...state,...action.payload}
         }
-        default: return state;
+        default:
+            return state;
     }
 };
 
-export const loadingAC = (loading:boolean) => {
+export const loadingAC = (loading:boolean): loadingACType => {
     return {
-        type: TOGGLE_LOADING,
-        loading
-    }as const
-}; // fix any
+        type: 'LOADING-CHANGE',
+        payload: {loading}
+    }
+};

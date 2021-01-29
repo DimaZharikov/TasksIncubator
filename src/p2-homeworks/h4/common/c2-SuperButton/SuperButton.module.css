@@ -1,41 +1,41 @@
-
-.red {
+.button_default {
+    color: black;
     text-decoration: none;
+    user-select: none;
+    background: rgb(215, 214, 214);
+    padding: .5em 1.5em;
     outline: none;
-    display: inline-block;
-    padding: 10px 30px;
-    margin: 10px 20px;
-    position: relative;
-    overflow: hidden;
-    border: 2px solid #fe6637;
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
-    color: #fe6637;
-    transition: .2s ease-in-out;
-    font-size: 16px;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    line-height: 8px;
-
+    border: 0.01em solid #b1b1b1;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.red:before {
-    content: "";
-    background: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    top: -8px;
-    left: -75px;
-    transform: skewX(-45deg);
+.button_red {
+    color: black;
+    text-decoration: none;
+    user-select: none;
+    background: rgb(239, 15, 0);
+    padding: .5em 1.5em;
+    outline: none;
+    border: 1px solid #bf7c7c;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
-.red:hover {
-    background: #fe6637;
-    color: #fff;
+.button_red:hover {
+    background: rgb(255, 78, 66);
 }
 
-.red:hover:before {
-    left: 150px;
-    transition: .5s ease-in-out;
+.button_red:active {
+    background: rgb(255, 140, 125);
+}
+
+.button_default:hover {
+    background: rgb(196, 196, 196);
+}
+
+.button_default:active {
+    background: rgb(112, 112, 112);
 }

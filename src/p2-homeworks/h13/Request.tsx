@@ -1,24 +1,27 @@
-import classes from './HW13.module.css';
-import React from 'react'
-import { reduxForm, InjectedFormProps, Field } from "redux-form";
+import React, {useState} from "react";
+import requestAPI from "./RequestAPI";
 
 
-export type CheckType = {
-  rememberMe: boolean
+const Request = () => {
+
+    const [checkboxStatus, setCheckboxStatus] = useState(false)
+    const [requestRes, setRequestRes] = useState('Делай запрос!!')
+
+    function sendRequestRes(checkboxStatus: boolean) {
+        requestAPI.post(checkboxStatus).then(data => {
+                setRequestRes(data)
+            }
+        )
+    }
+
+    return (
+        <div>
+            <input type="checkbox" onClick={() => setCheckboxStatus(!checkboxStatus)}/> Меняй статус!!<br/>
+            <button onClick={() => sendRequestRes(checkboxStatus)}>Запрос</button>
+            <br/>
+            {requestRes}
+        </div>
+    )
 }
-const Request: React.FC<InjectedFormProps<CheckType>> = ({ handleSubmit }) => {
-  return (
-    <form onSubmit={handleSubmit} className={classes.form}>
-      <div>
-        <Field component="input" type="checkbox" name="rememberMe" />
-      </div>
-      <button className={classes.Button} type="submit">
-        Send
-      </button>
-    </form>
-  );
-};
 
-export default reduxForm<CheckType>({
-  form: "request1",
-})(Request);
+export default Request;

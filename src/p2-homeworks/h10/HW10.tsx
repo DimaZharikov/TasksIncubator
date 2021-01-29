@@ -1,41 +1,54 @@
-import classes from "./HW10Wrapper.module.css";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import SuperButton from "../h4/common/c2-SuperButton/SuperButton";
-import { loadingAC} from "./bll/loadingReducer";
-import { AppStoreType } from "./bll/store";
-import Spinner from "./spinner";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStoreType} from "./bll/store";
+import {loadingAC} from "./bll/loadingReducer";
+import './HW10Style.css'
 
 function HW10() {
-    // useSelector, useDispatch
-    const loading = useSelector<AppStoreType, boolean>(state=>state.loading.loading);
+    const loading = useSelector<AppStoreType, boolean>(state => state.loading.loading)
     const dispatch = useDispatch()
 
     const setLoading = () => {
-        dispatch(loadingAC(true));
-        setTimeout(() => {
-            dispatch(loadingAC(false));
-        },2000)
+        dispatch(loadingAC(true))
+        setTimeout(() => dispatch(loadingAC(false)),2000)
+        console.log("loading...");
     };
 
     return (
-        <div className={classes.HW10Wrapper}>
-
-            {/*should work (должно работать)*/}
+        <div>
+            <hr/>
+            homeworks 10
+            <div className='HW10'>
             {loading
                 ? (
-                    <Spinner />
+                    <div className='windows8-wrapper'>
+                    <div className="windows8">
+                        <div className="wBall" id="wBall_1">
+                            <div className="wInnerBall"></div>
+                        </div>
+                        <div className="wBall" id="wBall_2">
+                            <div className="wInnerBall"></div>
+                        </div>
+                        <div className="wBall" id="wBall_3">
+                            <div className="wInnerBall"></div>
+                        </div>
+                        <div className="wBall" id="wBall_4">
+                            <div className="wInnerBall"></div>
+                        </div>
+                        <div className="wBall" id="wBall_5">
+                            <div className="wInnerBall"></div>
+                        </div>
+                    </div>
+                    </div>
                 ) : (
-                    <div className={classes.HW10Btn}>
+                    <div>
                         <SuperButton onClick={setLoading}>set loading...</SuperButton>
                     </div>
                 )
             }
-
-
-            {/*для личного творчества, могу проверить*/}
-            {/*<Alternative/>*/}
-
+            <hr/>
+            </div>
         </div>
     );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 
-function AlternativeMessage() {
+function AlternativeClock() {
+
+
     return (
         <div>
 
@@ -8,4 +10,4 @@ function AlternativeMessage() {
     );
 }
 
-export default AlternativeMessage;
+export default AlternativeClock;

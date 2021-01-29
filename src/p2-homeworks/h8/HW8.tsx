@@ -1,17 +1,7 @@
 import React, {useState} from "react";
 import {homeWorkReducer} from "./bll/homeWorkReducer";
 import SuperButton from "../h4/common/c2-SuperButton/SuperButton";
-import { Button, ButtonGroup, Grid, List, Paper } from "@material-ui/core";
-import { useStyles } from "./useStyles";
-import AlternativePeople from "./AlternativePeople";
 
-export type UserType = {
-    _id: number
-    name: string
-    age: number
-}
-
-export type StateType = Array<UserType>
 const initialPeople = [
     {_id: 0, name: "Кот", age: 3},
     {_id: 1, name: "Александр", age: 66},
@@ -22,39 +12,35 @@ const initialPeople = [
 ]
 
 function HW8() {
-    const [people, setPeople] = useState<StateType>(initialPeople);
-    const classes = useStyles()
+    const [people, setPeople] = useState(initialPeople);
 
-    const finalPeople = people.map((p) => (
-      <Paper key={p._id} className={classes.paper}>
-        <span>{p.name}</span>
-        <span>{p.age}</span>
-      </Paper>
-    ));
+    const finalPeople = people.map(p => (
+        <div key={p._id}>
+            {p.name}, {p.age}
+        </div>
+    ))
 
-    const onSort = (way: string) => setPeople(homeWorkReducer(initialPeople, {type: "sort", payload: way}))
-    const onAgeCheck = (age:number) =>setPeople(homeWorkReducer(initialPeople, { type: "check", payload: age }));
+    const sortUp = () => setPeople(homeWorkReducer(initialPeople, {type: "sort", payload: "up"}))
+    const sortDown = () => setPeople(homeWorkReducer(initialPeople, {type: "sort", payload: "down"}))
+    const check = () => setPeople(homeWorkReducer(initialPeople, {type: 'check'}))
+
     return (
-      <Grid item xs={10} className={classes.wrapper}>
-        <Grid >
-          <Grid >
-            {finalPeople}
-          </Grid>
-          <ButtonGroup
-            className={classes.buttons}
-            variant="contained"
-            color="primary"
-            aria-label="outlined primary button group"
-          >
-            <Button onClick={() => onSort('up')}>sort up</Button>
-            <Button onClick={() => onSort('down')}>sort down</Button>
-            <Button onClick={() => onAgeCheck(18)}>Is 18?</Button>
-          </ButtonGroup>
-        </Grid>
+        <div>
+            <hr/>
+            homeworks 8
 
-        {/*для личного творчества, могу проверить*/}
-        <AlternativePeople />
-      </Grid>
+            {/*should work (должно работать)*/}
+            <div className='wrapper-hw6'>
+                {finalPeople}
+                <div><SuperButton onClick={sortUp}>sort up</SuperButton></div>
+                <div><SuperButton onClick={sortDown}>sort down</SuperButton></div>
+                <div><SuperButton onClick={check}>check 18</SuperButton></div>
+                <hr/>
+                {/*для личного творчества, могу проверить*/}
+                {/*<AlternativePeople/>*/}
+                <hr/>
+            </div>
+        </div>
     );
 }
 

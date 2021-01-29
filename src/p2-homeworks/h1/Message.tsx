@@ -1,22 +1,32 @@
 import React from "react";
-import { MessageDateType } from "./HW1";
-import classes from "./Message.module.css";
+import s from "./Message.module.css";
 
 
-function Message(props: MessageDateType) {
-  const { avatar, name, message, time } = props;
-  return (
-      <div className={classes.message}>
-        <div>
-          <img src={avatar}></img>
+type MessageDataType = {
+    avatar: string
+    name: string
+    message: string
+    time: string
+}
+
+type MessagePropsType = {
+    messageData: MessageDataType
+}
+
+const Message = (props: MessagePropsType) => {
+    return (
+        <div className={s.message}>
+            <img className={s.img} alt='Текст' src={props.messageData.avatar}/>
+            <div className={s.content}>
+                <div className={s.name}>{props.messageData.name}</div>
+                <div className={s.text}>{props.messageData.message}</div>
+                <div className={s.time}>{props.messageData.time}</div>
+            </div>
+
+            <div className={s.clear}></div>
+
         </div>
-        <div className={classes.message__baloon}>
-          <h2>{name}</h2>
-          <p>{message}</p>
-          <span>{time}</span>
-        </div>
-      </div>
-  );
+    )
 }
 
 export default Message;

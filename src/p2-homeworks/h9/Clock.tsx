@@ -1,66 +1,68 @@
-import classes from "./clocks.module.css";
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import SuperButton from "../h4/common/c2-SuperButton/SuperButton";
-import moment from "moment";
+import s from './Clock.module.css'
 
 function Clock() {
-    
-    const [time, setTime] = useState<string>('');
-    const[timeId, setTimeId] = useState<number>()
-    const [date, setDate] = useState<string>('');
-  const [show, setShow] = useState<boolean>(false);
-  const [started, setStarted] = useState<boolean>(true);
-    console.log(timeId);
-    
-  useEffect(() => {
-  start()
-},[])
-    
-  const start = () => {
-      setStarted(true)
-        let interval = window.setInterval(() => {
-            let time = moment().format("h:mm:ss a");
-            setTime(time);
-        }, 100)
-       setTimeId(interval)
-    }
+    const [timerId, setTimerId] = useState<number>(0);
+    const [date, setDate] = useState<Date>(new Date());
+    const [show, setShow] = useState<boolean>(false);
+
     const stop = () => {
-      clearInterval(timeId)
-      setStarted(false)
-        
+        clearInterval(timerId)
+    }
+    const start = () => {
+        stop();
+        const id: number = window.setInterval(() => {
+            setDate(new Date())
+        }, 1000);
+        setTimerId(id);
     }
 
     const onMouseEnter = () => {
         setShow(true)
-        let newDate = moment().format("MMMM Do YYYY");
-        setDate(newDate)
     };
     const onMouseLeave = () => {
         setShow(false)
     };
+    let twoSymbolsInClock = (num: number) => num < 10 ? '0' + num : num
 
-    const stringTime = time; // fix with date
-    const stringDate = date; // fix with date
+    const stringDate = date.getDate() + '-' + (date.getMonth() + 1) + '-' + date.getFullYear();
 
     return (
-      <div style={{marginBottom:'50px'}}>
-        <div
-          className={classes.ClocksDisplay}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-        >
-          {stringTime}
-          {show && <div className={classes.Date}>{stringDate}</div>}
+        <div className={s.container}>
+            <div
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
+                className={s.forDate}
+            >
+                {show && (
+                    <div className={s.mySpan}>{stringDate} </div>
+                )}
+                <div className={s.clockWrapper}>
+                    <div className={s.clock}>
+                        <span>{twoSymbolsInClock(date.getHours())}</span>
+                        <span className={s.text}>hours</span>
+                    </div>
+                    :
+                    <div className={s.clock}>
+                        <span>{twoSymbolsInClock(date.getMinutes())}</span>
+                        <span className={s.text}>minutes</span>
+                    </div>
+                    :
+                    <div className={s.clock}>
+                        <span>{twoSymbolsInClock(date.getSeconds())}</span>
+                        <span className={s.text}>seconds</span>
+                    </div>
+                </div>
+            </div>
+
+            <div className={s.buttons}>
+                <SuperButton onClick={start} className={s.button}>start</SuperButton>
+                <SuperButton onClick={stop} className={s.button}>stop</SuperButton>
+            </div>
+
+
         </div>
-        <div className={classes.ButtonWrapper}>
-          <SuperButton
-            disabled={started}
-            className={classes.Button}
-            onClick={start}
-          >start</SuperButton>
-          <SuperButton className = {classes.Button}onClick={stop}>stop</SuperButton>
-        </div>
-      </div>
     );
 }
 

@@ -1,12 +1,11 @@
-import React, {useState} from "react";
-import { v1 } from "uuid";
+import React, {ChangeEvent, useState} from "react";
 import Greeting from "./Greeting";
-import {UserType} from './HW3'
+import {UserType} from "./HW3";
 
 type GreetingContainerPropsType = {
-  users: Array<UserType>; // need to fix any
-  addUserCallback: (arr: Array<UserType>) => void; // need to fix any
-};
+    users: Array<UserType>
+    addUserCallback: (name: string) => void
+}
 
 // более простой и понятный для новичков
 // function GreetingContainer(props: GreetingPropsType) {
@@ -14,30 +13,24 @@ type GreetingContainerPropsType = {
 // более современный и удобный для про :)
 // уровень локальной логики
 const GreetingContainer: React.FC<GreetingContainerPropsType> = ({users, addUserCallback}) => { // деструктуризация пропсов
-    const [name, setName] = useState<string>(""); // need to fix any
-    const [error, setError] = useState<string>(""); // need to fix any
+    const [name, setName] = useState<string>("");
+    const [error, setError] = useState<boolean>(false);
 
-    const setNameCallback = (e: string) => { // need to fix any
-        setName(e); // need to fix
-        setError("");
+    const setNameCallback = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.currentTarget.value); // need to fix
+
     };
     const addUser = () => {
-        let isName = name.trim()
-        if (isName !== "") {
-          const newUser = { _id: v1(), name: isName};
-          users.push(newUser);
-            addUserCallback([...users]);
-            setName('')
-          alert(`Hello  ${name}!`); // need to fix
+        if (name === '') {
+            setError(true)
+        } else {
+            setError(false)
+            setTimeout(() => alert(`Hello ${name} !`), 100); // need to fix
+            addUserCallback(name)
         }
-        else {
-            setError('This field must not be empty')
-            return
-        }
-
     };
-    
-   let totalUsers = users.length; // need to fix
+
+    const totalUsers = users.length; // need to fix
 
     return (
         <Greeting
